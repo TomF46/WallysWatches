@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -18,9 +18,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'firstName',
+        'lastName',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -41,4 +43,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getFullName()
+    {
+        return "{$this->firstName} {$this->lastName}";
+    }
+
+    public function map()
+    {
+        return [
+            'id' => $this->id,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'fullName' => $this->getFullName(),
+            'email' => $this->email,
+            'role' => $this->role
+        ];
+    }
 }
