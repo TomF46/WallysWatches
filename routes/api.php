@@ -29,9 +29,13 @@ Route::group([
     });
 });
 
+//Unauthenticated routes
+Route::get('/products', [App\Http\Controllers\ProductsController::class, 'index']);
+Route::post('/products/search', [App\Http\Controllers\ProductsController::class, 'filter']);
+Route::get('/products/showcase', [App\Http\Controllers\ProductsController::class, 'showcase']);
+
 Route::middleware(['auth:api'])->group(function () {  
-    Route::get('/products', [App\Http\Controllers\ProductsController::class, 'index']);
-    Route::post('/products/search', [App\Http\Controllers\ProductsController::class, 'filter']);
+    //
 });
 
 Route::middleware(['auth:api', 'admin'])->group(function () {

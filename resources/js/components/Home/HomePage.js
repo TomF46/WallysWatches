@@ -4,11 +4,6 @@ import Showcase from "../DisplayComponents/Showcase/Showcase";
 import SplashImage from "../DisplayComponents/SplashImage";
 
 const HomePage = () => {
-    const images = [
-        { id: 1, name: "Fossil 10 atm", price: 2500, stock: 10, url: "https://wallys-watches.s3.eu-west-2.amazonaws.com/products/fabian-heimann-4R_WEmhx8og-unsplash.jpg" },
-        { id: 2, name: "Rolex Oyster", price: 5000, stock: 2, url: "https://wallys-watches.s3.eu-west-2.amazonaws.com/products/john-torcasio-133Vq4tTpBQ-unsplash.jpg" },
-        { id: 3, name: "Omega Seamaster", price: 1999, stock: 1, url: "https://wallys-watches.s3.eu-west-2.amazonaws.com/products/john-torcasio-TJrkkhdB39E-unsplash.jpg" }
-    ]
     return (
         <div className="Home-page">
             <SplashImage url={"https://wallys-watches.s3.eu-west-2.amazonaws.com/Splash2Resized.png"} />
@@ -25,7 +20,7 @@ const HomePage = () => {
                     </Link>
                 </div>
                 <div className="mb-8">
-                    <Showcase images={images} />
+                    <Showcase />
                 </div>
             </div>
         </div>

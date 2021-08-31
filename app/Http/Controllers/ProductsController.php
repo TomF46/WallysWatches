@@ -37,6 +37,16 @@ class ProductsController extends Controller
         return response()->json($product->map());
     }
 
+    public function showcase(Request $request)
+    {
+
+        $products = Product::where('active', true)->take(3)->get()->map(function ($product) {
+            return $product->map();
+        });
+
+        return response()->json($products);
+    }
+
     public function store(Request $request)
     {
         $attributes = $this->validateProduct($request);

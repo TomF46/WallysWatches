@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\productImage;
+use App\Models\ProductImage;
 
 class Product extends Model
 {
@@ -23,6 +23,13 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
+    protected function getImages()
+    {
+        return $this->productImages->map(function ($productImage) {
+            return $productImage->map();
+        });
+    }
+
     public function map()
     {
         return [
@@ -31,7 +38,8 @@ class Product extends Model
             'productCode' => $this->productCode,
             'description' => $this->description,
             'price' => $this->price,
-            'stock' => $this->stock
+            'stock' => $this->stock,
+            'images' => $this->getImages()
         ];
     }
 
