@@ -32,7 +32,7 @@ export function login(userLoginDetails) {
 export function logout() {
     return function (dispatch) {
         removeTokens();
-        history.push("/login");
+        history.push("/auth/login");
         dispatch(userLogoutSuccess());
     };
 }
