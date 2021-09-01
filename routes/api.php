@@ -33,6 +33,7 @@ Route::group([
 Route::get('/products', [App\Http\Controllers\ProductsController::class, 'index']);
 Route::post('/products/search', [App\Http\Controllers\ProductsController::class, 'filter']);
 Route::get('/products/showcase', [App\Http\Controllers\ProductsController::class, 'showcase']);
+Route::get('/products/{product}', [App\Http\Controllers\ProductsController::class, 'show']);
 
 Route::middleware(['auth:api'])->group(function () {  
     //
@@ -40,7 +41,6 @@ Route::middleware(['auth:api'])->group(function () {
 
 Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('/products', [App\Http\Controllers\ProductsController::class, 'store']);
-    Route::get('/products/{product}', [App\Http\Controllers\ProductsController::class, 'show']);
     Route::put('/products/{product}', [App\Http\Controllers\ProductsController::class, 'update']);
     Route::post('/products/{product}/deactivate', [App\Http\Controllers\ProductsController::class, 'deactivate']);
 });
