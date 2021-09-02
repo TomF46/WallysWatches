@@ -21,6 +21,14 @@ class ProductSearch
             $product->where('productCode', 'like', "{$filters->input('productCode')}%");
         }
 
+        if ($filters->has('minCost')) {
+            $product->where('price', '>=', (float)"{$filters->input('minCost')}%");
+        }
+
+        if ($filters->has('maxCost') && $filters->input('maxCost') != null ) {
+            $product->where('price', '<=', (float)"{$filters->input('maxCost')}%");
+        }
+
         return $product;
     }
 }
