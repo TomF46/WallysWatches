@@ -8,7 +8,7 @@ import { logout } from "../../redux/actions/authenticationActions";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 
-const Header = ({ userIsAuthenticated, isAdmin, checkUserIsAdmin, logout }) => {
+const Header = ({ userIsAuthenticated, isAdmin, checkUserIsAdmin, bag, logout }) => {
     const [mobileIsOpen, setMobileIsOpen] = useState(null);
     const location = useLocation();
 
@@ -63,11 +63,22 @@ const Header = ({ userIsAuthenticated, isAdmin, checkUserIsAdmin, logout }) => {
                 <div className="text-sm md:flex-grow">
                 </div>
                 <div className="border-t mt-2 md:border-0 md:mt-0">
+                    <>
+                        <Link
+                            to={`/bag`}
+                            className="bg-primary text-secondary border-secondary hover:opacity-75  text-sm md:px-4 md:py-2 md:leading-none md:border rounded mt-4 md:mt-0 md:ml-2 inline-flex items-center"
+                        >
+                            <svg className="text-grey-800 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                            <span className="ml-1">Bag ({bag.length})</span>
+                        </Link>
+                    </>
                     {userIsAuthenticated ? (
                         <>
                             <button
                                 onClick={handleLogout}
-                                className="bg-primary hover:opacity-75  text-sm md:px-4 md:py-2 md:leading-none md:border rounded text-white  mt-4 md:mt-0 md:ml-2 inline-flex items-center"
+                                className="bg-primary text-secondary border-secondary hover:opacity-75  text-sm md:px-4 md:py-2 md:leading-none md:border rounded mt-4 md:mt-0 md:ml-2 inline-flex items-center"
                             >
                                 <svg className="text-grey-800 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -106,13 +117,16 @@ const Header = ({ userIsAuthenticated, isAdmin, checkUserIsAdmin, logout }) => {
 Header.propTypes = {
     userIsAuthenticated: PropTypes.bool.isRequired,
     isAdmin: PropTypes.bool.isRequired,
-    checkUserIsAdmin: PropTypes.func.isRequired
+    checkUserIsAdmin: PropTypes.func.isRequired,
+    bag: PropTypes.array.isRequired,
+
 };
 
 const mapStateToProps = (state, ownProps) => {
     return {
         userIsAuthenticated: state.tokens != null,
-        isAdmin: state.isAdmin
+        isAdmin: state.isAdmin,
+        bag: state.bag
     };
 };
 

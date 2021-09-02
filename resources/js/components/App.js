@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoginPage from "./Auth/Login/LoginPage";
 import RegisterPage from "./Auth/Register/RegisterPage";
+import BagPage from "./Bag/BagPage";
 import Header from "./DisplayComponents/Header";
 import HomePage from "./Home/HomePage";
 import ProductPage from "./Product/ProductPage";
@@ -20,6 +21,7 @@ const Main = ({ location }) => (
                 <Route path="/auth/register" component={RegisterPage} />
                 <Route path="/products/:productId" component={ProductPage} />
                 <Route path="/products" component={ProductsPage} />
+                <Route path="/bag" component={BagPage} />
             </Switch>
         </div>
         <ToastContainer autoClose={3000} hideProgressBar />

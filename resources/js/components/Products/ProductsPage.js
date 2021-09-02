@@ -9,7 +9,7 @@ import ProductSearchForm from "./ProductSearchForm";
 
 const ProductsPage = () => {
     const [productsPaginator, setProductsPaginator] = useState(null);
-    const [filters, setFilters] = useState({ name: "", productCode: "" });
+    const [filters, setFilters] = useState({ name: "", productCode: "", minCost: null, maxCost: null });
 
 
     useEffect(() => {
@@ -28,7 +28,6 @@ const ProductsPage = () => {
 
     function search() {
         searchProducts(filters).then(productsData => {
-            console.log(productsData);
             setProductsPaginator(productsData);
         }).catch(error => {
             toast.error("Error getting products " + error.message, {

@@ -6,9 +6,11 @@ import { toast } from "react-toastify";
 import LoadingMessage from "../DisplayComponents/LoadingMessage";
 import { getProductById } from "../../api/productsApi";
 import MoneyFormat from "../DisplayComponents/MoneyFormat";
+import { addItemToBag } from "../../redux/actions/bagActions";
+import { saveBag } from "../../tools/localStorage";
 
 
-const ProductPage = ({ productId }) => {
+const ProductPage = ({ productId, addItemToBag, bag }) => {
     const [product, setProduct] = useState(null);
     const [displayedImage, setDisplayedImage] = useState(null);
 
@@ -17,6 +19,10 @@ const ProductPage = ({ productId }) => {
             getProduct();
         }
     }, [productId, product])
+
+    useEffect(() => {
+        saveBag(bag);
+    }, [bag])
 
     function getProduct() {
         getProductById(productId).then(productData => {
@@ -27,6 +33,11 @@ const ProductPage = ({ productId }) => {
                 autoClose: false,
             });
         });
+    }
+
+    function handleAddToBag() {
+        addItemToBag(product);
+        toast.success("Item added to bag");
     }
 
     return (
@@ -41,6 +52,7 @@ const ProductPage = ({ productId }) => {
                         <p>{product.stock} Remaining</p>
                         <p className="mt-8">{product.description}</p>
                         <button
+                            onClick={handleAddToBag}
                             className="bg-primary text-secondary hover:opacity-75 text-sm md:px-4 md:py-2 md:leading-none rounded inline-flex items-center mx-auto my-8"
                         >
                             <svg className="text-grey-800 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,13 +86,19 @@ const ProductPage = ({ productId }) => {
 
 ProductPage.propTypes = {
     productId: PropTypes.any.isRequired,
+    bag: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
     return {
         productId: ownProps.match.params.productId,
+        bag: state.bag
     };
 };
 
+const mapDispatchToProps = {
+    addItemToBag
+};
 
-export default connect(mapStateToProps)(ProductPage);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
