@@ -5,9 +5,19 @@ module.exports = {
         extend: {},
         backgroundColor: theme => ({
             ...theme('colors'),
-            'primary': '#0096b4',
-            'secondary': '#00b478',
+            'primary': '#181619',
+            'secondary': '#DDA74F',
             'danger': '#b41e00'
+        }),
+        textColor: theme => ({
+            ...theme('colors'),
+            'primary': '#181619',
+            'secondary': '#DDA74F',
+        }),
+        borderColor: theme => ({
+            ...theme('colors'),
+            'primary': '#181619',
+            'secondary': '#DDA74F',
         })
     },
     variants: {},

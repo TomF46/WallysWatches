@@ -41,10 +41,10 @@ const Header = ({ userIsAuthenticated, isAdmin, checkUserIsAdmin, logout }) => {
     }
 
     return (
-        <nav className="flex items-center justify-between flex-wrap p-4 shadow-md">
+        <nav className="bg-primary flex items-center justify-between flex-wrap p-4 shadow-md">
             <div className="flex items-center flex-shrink-0  mr-6">
                 <Link to="/">
-                    <h1 className="logo-text font-bold text-2xl">Wallys Watches</h1>
+                    <h1 className="logo-text text-secondary font-bold text-2xl">Wallys Watches</h1>
                 </Link>
             </div>
             <div className="block md:hidden">
@@ -79,7 +79,7 @@ const Header = ({ userIsAuthenticated, isAdmin, checkUserIsAdmin, logout }) => {
                         <>
                             <Link
                                 to={`/auth/login`}
-                                className="bg-primary hover:opacity-75  text-sm md:px-4 md:py-2 md:leading-none md:border rounded text-white  mt-4 md:mt-0 md:ml-2 inline-flex items-center"
+                                className="bg-primary text-secondary border-secondary hover:opacity-75  text-sm md:px-4 md:py-2 md:leading-none md:border rounded  mt-4 md:mt-0 md:ml-2 inline-flex items-center"
                             >
                                 <svg className="text-grey-800 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -88,7 +88,7 @@ const Header = ({ userIsAuthenticated, isAdmin, checkUserIsAdmin, logout }) => {
                             </Link>
                             <Link
                                 to={`/auth/register`}
-                                className="bg-primary hover:opacity-75  text-sm md:px-4 md:py-2 md:leading-none md:border rounded text-white  mt-4 md:mt-0 md:ml-2 inline-flex items-center"
+                                className="bg-primary text-secondary border-secondary hover:opacity-75  text-sm md:px-4 md:py-2 md:leading-none md:border rounded  mt-4 md:mt-0 md:ml-2 inline-flex items-center"
                             >
                                 <svg className="text-grey-800 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
