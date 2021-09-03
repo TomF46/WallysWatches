@@ -56,22 +56,27 @@ const ProductsPage = () => {
     }
 
     return (
-        <div className="products-page container mx-auto p-4 lg:p-0">
-            {!productsPaginator ? (
-                <LoadingMessage message={'Loading products to explore'} />
-            ) : (
-                <>
-                    <ProductSearchForm filters={filters} onFilterChange={handleFilterChange} />
-                    <div>
-                        {productsPaginator.total > 0 ? (
-                            <ProductsGridWithPagination paginationData={productsPaginator} onPageChange={getProductPage} />
-                        ) : (
-                            <p className="text-center">No products match your search</p>
-                        )}
-                    </div>
-                </>
-            )}
-        </div>
+        <>
+            <div className="bg-secondary mb-8">
+                <h1 className="font-bold text-3xl text-center items-center py-4">Products</h1>
+            </div>
+            <div className="products-page container mx-auto p-4 lg:p-0">
+                {!productsPaginator ? (
+                    <LoadingMessage message={'Loading products to explore'} />
+                ) : (
+                    <>
+                        <ProductSearchForm filters={filters} onFilterChange={handleFilterChange} />
+                        <div>
+                            {productsPaginator.total > 0 ? (
+                                <ProductsGridWithPagination paginationData={productsPaginator} onPageChange={getProductPage} />
+                            ) : (
+                                <p className="text-center">No products match your search</p>
+                            )}
+                        </div>
+                    </>
+                )}
+            </div>
+        </>
 
     );
 };

@@ -13,6 +13,10 @@ const Header = ({ userIsAuthenticated, isAdmin, checkUserIsAdmin, bag, logout })
     const location = useLocation();
 
     useEffect(() => {
+        checkUserIsAdmin();
+    }, [])
+
+    useEffect(() => {
         setMobileIsOpen(false);
     }, [location]);
 
@@ -76,6 +80,17 @@ const Header = ({ userIsAuthenticated, isAdmin, checkUserIsAdmin, bag, logout })
                     </>
                     {userIsAuthenticated ? (
                         <>
+                            {isAdmin && (
+                                <Link
+                                    to={`/admin`}
+                                    className="bg-primary text-secondary border-secondary hover:opacity-75  text-sm md:px-4 md:py-2 md:leading-none md:border rounded  mt-4 md:mt-0 md:ml-2 inline-flex items-center"
+                                >
+                                    <svg className="text-grey-800 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    <span className="ml-1">Admin</span>
+                                </Link>
+                            )}
                             <button
                                 onClick={handleLogout}
                                 className="bg-primary text-secondary border-secondary hover:opacity-75  text-sm md:px-4 md:py-2 md:leading-none md:border rounded mt-4 md:mt-0 md:ml-2 inline-flex items-center"

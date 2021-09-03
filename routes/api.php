@@ -36,11 +36,18 @@ Route::get('/products/showcase', [App\Http\Controllers\ProductsController::class
 Route::get('/products/{product}', [App\Http\Controllers\ProductsController::class, 'show']);
 
 Route::middleware(['auth:api'])->group(function () {  
-    //
+    Route::get('/me/isAdmin', [App\Http\Controllers\MeController::class, 'isAdmin']);
 });
 
 Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('/products', [App\Http\Controllers\ProductsController::class, 'store']);
     Route::put('/products/{product}', [App\Http\Controllers\ProductsController::class, 'update']);
     Route::post('/products/{product}/deactivate', [App\Http\Controllers\ProductsController::class, 'deactivate']);
+
+    Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'index']);
+    Route::get('/customers/{user}', [App\Http\Controllers\CustomerController::class, 'show']);
+    Route::put('/customers/{user}', [App\Http\Controllers\CustomerController::class, 'update']);
+    Route::post('/customers/{user}/changePassword', [App\Http\Controllers\CustomerController::class, 'changePassword']);
+    Route::post('/customers/{user}/deactivate', [App\Http\Controllers\CustomerController::class, 'deactivate']);
+    Route::post('/customers/search', [App\Http\Controllers\CustomerController::class, 'filter']);
 });
