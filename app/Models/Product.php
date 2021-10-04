@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductImage;
+use App\Models\Brand;
 
 class Product extends Model
 {
@@ -12,11 +13,17 @@ class Product extends Model
     public $timestamps = false;
     protected $fillable = [
         'name',
+        'brand_id',
         'productCode',
         'description',
         'price',
         'stock'
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
     public function productImages()
     {
@@ -34,7 +41,9 @@ class Product extends Model
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => "{$this->brand->name} {$this->name}",
+            'model' => $this->name,
+            'brandName' => $this->brand->name,
             'productCode' => $this->productCode,
             'description' => $this->description,
             'price' => $this->price,

@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('brand_id');
             $table->string('productCode')->unique();
             $table->text('description');
             $table->decimal('price', $precision = 19, $scale = 4);

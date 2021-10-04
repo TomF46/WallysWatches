@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Product;
+use App\Models\Brand;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -23,6 +24,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
+            'brand_id' => Brand::factory(),
             'productCode' => $this->faker->unique()->isbn10(),
             'description' => $this->faker->realText(),
             'price' => $this->faker->numberBetween(1,25000),
