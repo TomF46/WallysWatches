@@ -1,0 +1,101 @@
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import LoadingMessage from "../../../../DisplayComponents/LoadingMessage";
+import { getBrandById, getBrandProducts, getBrandProductsPage } from "../../../../../api/brandsApi";
+import ProductsGridWithPagination from "../../../../DisplayComponents/ProductsGridWithPagination";
+
+
+
+const BrandPage = ({ brandId }) => {
+    const [brand, setBrand] = useState(null);
+    const [productsPaginator, setProductsPaginator] = useState(null);
+
+
+    useEffect(() => {
+        if (!brand) {
+            getBrand();
+        }
+    }, [brandId, brand])
+
+    function getBrand() {
+        getBrandById(brandId).then(brandData => {
+            setBrand(brandData);
+            getProducts();
+        }).catch(error => {
+            toast.error("Error getting brand " + error.message, {
+                autoClose: false,
+            });
+        });
+    }
+
+    function getProducts() {
+        getBrandProducts(brandId).then(productsData => {
+            setProductsPaginator(productsData);
+        }).catch(error => {
+            toast.error("Error getting products " + error.message, {
+                autoClose: false,
+            });
+        });
+    }
+
+    function getBrandProductsByPage(url) {
+        getBrandProductsPage(url).then(productsData => {
+            setProductsPaginator(productsData);
+        }).catch(error => {
+            toast.error("Error getting products " + error.message, {
+                autoClose: false,
+            });
+        });
+    }
+
+    return (
+        <>
+            <div className="bg-secondary mb-8">
+                <h1 className="font-bold text-3xl text-center items-center py-4">{brand ? brand.name : "Loading..."}</h1>
+            </div>
+            <div className="brand-page container mx-auto p-4 lg:p-0">
+                {!brand ? (
+                    <LoadingMessage message={"Loading Brand"} />
+                ) : (
+                    <>
+                        <div className="grid grid-cols-12 mt-16">
+                            <div className="col-span-12 text-center">
+                                <h1 className="font-bold text-4xl">{brand.name}</h1>
+                                <p className="mt-8">{brand.description}</p>
+                            </div>
+                        </div>
+                        <div className="mx-auto mt-16">
+                            {!productsPaginator ? (
+                                <LoadingMessage message={'Loading products'} />
+                            ) : (
+                                <div>
+                                    {productsPaginator.total > 0 ? (
+                                        <ProductsGridWithPagination paginationData={productsPaginator} onPageChange={getBrandProductsByPage} />
+                                    ) : (
+                                        <p className="text-center">{brand.name} doesn't currently have any available products</p>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    </>
+                )}
+            </div>
+        </>
+    )
+};
+
+BrandPage.propTypes = {
+    brandId: PropTypes.any.isRequired
+};
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        brandId: ownProps.match.params.brandId
+    };
+};
+
+
+export default connect(mapStateToProps)(BrandPage);

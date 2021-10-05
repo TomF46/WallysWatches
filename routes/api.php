@@ -35,6 +35,12 @@ Route::post('/products/search', [App\Http\Controllers\ProductsController::class,
 Route::get('/products/showcase', [App\Http\Controllers\ProductsController::class, 'showcase']);
 Route::get('/products/{product}', [App\Http\Controllers\ProductsController::class, 'show']);
 
+Route::get('/brands', [App\Http\Controllers\BrandsController::class, 'index']);
+Route::post('/brands/search', [App\Http\Controllers\BrandsController::class, 'filter']);
+Route::get('/brands/{brand}', [App\Http\Controllers\BrandsController::class, 'show']);
+Route::get('/brands/{brand}/products', [App\Http\Controllers\BrandsController::class, 'products']);
+
+
 Route::middleware(['auth:api'])->group(function () {  
     Route::get('/me/isAdmin', [App\Http\Controllers\MeController::class, 'isAdmin']);
 });
@@ -50,4 +56,8 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('/customers/{user}/changePassword', [App\Http\Controllers\CustomerController::class, 'changePassword']);
     Route::post('/customers/{user}/deactivate', [App\Http\Controllers\CustomerController::class, 'deactivate']);
     Route::post('/customers/search', [App\Http\Controllers\CustomerController::class, 'filter']);
+
+    Route::post('/brands', [App\Http\Controllers\BrandsController::class, 'store']);
+    Route::put('/brands/{brand}', [App\Http\Controllers\BrandsController::class, 'update']);
+    Route::post('/brands/{brand}/deactivate', [App\Http\Controllers\BrandsController::class, 'deactivate']);
 });

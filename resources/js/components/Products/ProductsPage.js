@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { searchProducts, searchProductsWithPagination } from "../../api/productsApi";
 import { toast } from "react-toastify";
 import _, { debounce } from 'lodash';

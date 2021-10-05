@@ -37,13 +37,18 @@ class Product extends Model
         });
     }
 
+    protected function getBrand()
+    {
+        return $this->brand->map();
+    }
+
     public function map()
     {
         return [
             'id' => $this->id,
             'name' => "{$this->brand->name} {$this->name}",
             'model' => $this->name,
-            'brandName' => $this->brand->name,
+            'brand' => $this->getBrand(),
             'productCode' => $this->productCode,
             'description' => $this->description,
             'price' => $this->price,

@@ -24,7 +24,7 @@ class ProductsController extends Controller
 
     public function filter(Request $request)
     {
-        $paginator = ProductSearch::apply($request)->paginate(20);
+        $paginator = ProductSearch::apply($request)->paginate(12);
         $paginator->getCollection()->transform(function ($product){
             return $product->map();
         });
@@ -53,6 +53,7 @@ class ProductsController extends Controller
 
         $product = Product::create([
             'name' => $attributes['name'],
+            'brand_id' => $attributes['brand_id'],
             'productCode' => $attributes['productCode'],
             'description' => $attributes['description'],
             'price' => $attributes['price'],
@@ -66,6 +67,7 @@ class ProductsController extends Controller
     {
         $attributes = $this->validateProduct($request, $product);
         $product->name = $attributes['name'];
+        $product->brand_id = $attributes['brand_id'];
         $product->productCode = $attributes['productCode'];
         $product->description = $attributes['description'];
         $product->price = $attributes['price'];
@@ -86,6 +88,7 @@ class ProductsController extends Controller
     {
         return $request->validate([
             'name' => 'required|max:50',
+            'brand_id' => 'required|exists:brands,id',
             'productCode' => 'required|unique:products|max:20',
             'description' => 'required|max:2000',
             'price' => 'required',

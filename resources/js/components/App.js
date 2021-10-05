@@ -4,7 +4,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminRoute from "../AdminRoute";
 import AdminHomePage from "./Admin/AdminHomepage";
-import ProductManagementPage from "./Admin/Products/ProductManagementPage";
+import BrandPage from "./Admin/Products/Brands/Brand/BrandPage";
+import BrandsManagementPage from "./Admin/Products/Brands/BrandsManagementPage";
 import UsersManagementPage from "./Admin/Users/UserManagementPage";
 import LoginPage from "./Auth/Login/LoginPage";
 import RegisterPage from "./Auth/Register/RegisterPage";
@@ -23,8 +24,13 @@ const Main = ({ location }) => (
                 <Route path="/auth/login" component={LoginPage} />
                 <Route path="/auth/register" component={RegisterPage} />
                 <AdminRoute
-                    path="/admin/products"
-                    component={ProductManagementPage
+                    path="/admin/brands/:brandId"
+                    component={BrandPage
+                    }
+                />
+                <AdminRoute
+                    path="/admin/brands"
+                    component={BrandsManagementPage
                     }
                 />
                 <AdminRoute

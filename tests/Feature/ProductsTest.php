@@ -9,6 +9,7 @@ use Tests\TestCase;
 use App\Enums\Roles;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Brand;
 use Tests\Helpers\TestHelper;
 
 class ProductsTest extends TestCase
@@ -27,13 +28,16 @@ class ProductsTest extends TestCase
 
     public function testCanAddProduct()
     {
+        $brand = Brand::factory()->create();
+
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . TestHelper::getBearerTokenForUser($this->user)
         ])->postJson(
             '/api/products',
             [
-                'name' => 'Tissot Watch',
+                'name' => 'Le Locle',
+                'brand_id' => $brand->id,
                 'productCode' => 'TW3045',
                 'description' => "A Tissot watch",
                 'price' => 499.99,
@@ -72,7 +76,10 @@ class ProductsTest extends TestCase
 
     public function testCanUpdateProduct()
     {
-        $product = Product::factory()->create();
+        $brand = Brand::factory()->create();
+        $product = Product::factory()->create([
+            'brand_id' => $brand->id
+        ]);
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
@@ -81,6 +88,7 @@ class ProductsTest extends TestCase
             '/api/products/' . $product->id,
             [
                 'name' => 'Swiss Watch',
+                'brand_id' => $brand->id,
                 'productCode' => 'SW2020',
                 'description' => "A desc",
                 'price' => 400,
@@ -90,6 +98,7 @@ class ProductsTest extends TestCase
         $response->assertOk();
         $response->assertJson([
             'name' => 'Swiss Watch',
+            'brand_id' => $brand->id,
             'productCode' => 'SW2020',
             'description' => "A desc",
             'price' => 400,
@@ -99,9 +108,8 @@ class ProductsTest extends TestCase
 
     public function testCanGetProduct()
     {
-        $product = Product::factory()->create([
-            'name' => "Watch"
-        ]);
+
+        $product = Product::factory()->create();
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
@@ -110,7 +118,7 @@ class ProductsTest extends TestCase
 
         $response->assertOk();
         $response->assertJson([
-            'name' => 'Watch',
+            'id' => $product->id,
         ]);
     }
 

@@ -83,8 +83,8 @@ const ProductPage = ({ productId, addItemToBag, bag }) => {
                             )}
                         </div>
                         <div className="col-span-12 bg-secondary my-16 p-4 rounded overflow-hidden shadow-lg">
-                            <h3 className="font-bold text-2xl">{product.brandName}</h3>
-                            <p className="mt-2">{product.description}</p>
+                            <h3 className="font-bold text-2xl">{product.brand.name}</h3>
+                            <p className="mt-2">{product.brand.description}</p>
                             <h3 className="font-bold text-2xl mt-4">Warranty</h3>
                             <p className="mt-2">All items are covered by their manufacturer's by default, please get in touch during this period if you need help and we will direct you to the correct place. For more information about each manufacturer's warranty please see their own website.</p>
                             <h3 className="font-bold text-2xl mt-4">Returns</h3>
