@@ -1,5 +1,16 @@
 import axiosClient from "../tools/axiosClient";
 
+export function AddBrand(brand) {
+    return axiosClient
+        .post("/api/brands", brand)
+        .then(response => {
+            return response;
+        })
+        .catch(error => {
+            throw error.response;
+        });
+}
+
 export function getBrandById(id) {
     return axiosClient
         .get(`/api/brands/${id}`)
