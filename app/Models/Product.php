@@ -62,4 +62,20 @@ class Product extends Model
         $this->active = false;
         $this->save();
     }
+
+    public function attatchImages($images){
+        $this->removeExistingImages();
+        foreach($images as $url){
+            ProductImage::create([
+                "product_id" => $this->id,
+                "image_url" => $url
+            ]);
+        }
+    }
+
+    protected function removeExistingImages(){
+        foreach($this->productImages as $image){
+            $image->delete();
+        }
+    }
 }

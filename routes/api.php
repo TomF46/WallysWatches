@@ -50,6 +50,9 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::put('/products/{product}', [App\Http\Controllers\ProductsController::class, 'update']);
     Route::post('/products/{product}/deactivate', [App\Http\Controllers\ProductsController::class, 'deactivate']);
 
+    Route::post('/productImages', [App\Http\Controllers\ProductImagesController::class, 'store']);
+
+
     Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'index']);
     Route::get('/customers/{user}', [App\Http\Controllers\CustomerController::class, 'show']);
     Route::put('/customers/{user}', [App\Http\Controllers\CustomerController::class, 'update']);

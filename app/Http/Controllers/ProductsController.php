@@ -60,12 +60,14 @@ class ProductsController extends Controller
             'stock' => $attributes['stock']
         ]);
 
+        $product->attatchImages($attributes['images']);
+
         return response()->json($product, 201);
     }
 
     public function update(Request $request, Product $product)
     {
-        $attributes = $this->validateProduct($request, $product);
+        $attributes = $this->validateProductUpdate($request, $product);
         $product->name = $attributes['name'];
         $product->brand_id = $attributes['brand_id'];
         $product->productCode = $attributes['productCode'];
@@ -73,6 +75,7 @@ class ProductsController extends Controller
         $product->price = $attributes['price'];
         $product->stock = $attributes['stock'];
         $product->update($attributes);
+        $product->attatchImages($attributes['images']);
         $product = $product->fresh();
         return response()->json($product);
     }
@@ -89,10 +92,24 @@ class ProductsController extends Controller
         return $request->validate([
             'name' => 'required|max:50',
             'brand_id' => 'required|exists:brands,id',
-            'productCode' => 'required|unique:products|max:20',
+            'productCode' => 'required||max:20|unique:products',
             'description' => 'required|max:2000',
             'price' => 'required',
-            'stock' => 'required|min:0'
+            'stock' => 'required|min:0',
+            'images' => 'required'
+        ]);
+    }
+
+    protected function validateProductUpdate(Request $request, Product $product)
+    {
+        return $request->validate([
+            'name' => 'required|max:50',
+            'brand_id' => 'required|exists:brands,id',
+            'productCode' => ['required', 'max:20', Rule::unique('products')->ignore($product)],
+            'description' => 'required|max:2000',
+            'price' => 'required',
+            'stock' => 'required|min:0',
+            'images' => 'required'
         ]);
     }
 }
