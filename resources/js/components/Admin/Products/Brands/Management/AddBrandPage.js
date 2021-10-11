@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { AddBrand } from "../../../../../api/brandsApi";
+import { AddBrand, storeBrandLogo } from "../../../../../api/brandsApi";
 import BrandForm from "./BrandForm";
 
 const AddBrandPage = ({ history }) => {
     const [brand, setBrand] = useState({
         name: "",
         description: "",
-        logo_url: "https://via.placeholder.com/150"
+        logo_url: null
     });
     const [errors, setErrors] = useState({});
     const [saving, setSaving] = useState(false);
@@ -56,6 +56,20 @@ const AddBrandPage = ({ history }) => {
         return errorText;
     }
 
+    function handleImageUpload(event) {
+        let file = event.target.files[0];
+        storeBrandLogo(file).then(res => {
+            toast.success("Sucessfully uploaded image");
+            setBrand(prevBrand => ({
+                ...prevBrand,
+                logo_url: res.path
+            }));
+        }).catch(error => {
+            setIsUpploadingImage(false);
+            toast.error("Unable to uploaded image");
+        });
+    }
+
     return (
         <div className="add-brand-page">
             <div className="bg-secondary mb-8">
@@ -66,6 +80,7 @@ const AddBrandPage = ({ history }) => {
                     brand={brand}
                     errors={errors}
                     onChange={handleChange}
+                    onImageUpload={handleImageUpload}
                     onSave={handleSave}
                     saving={saving}
                 />

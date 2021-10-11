@@ -60,4 +60,6 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('/brands', [App\Http\Controllers\BrandsController::class, 'store']);
     Route::put('/brands/{brand}', [App\Http\Controllers\BrandsController::class, 'update']);
     Route::post('/brands/{brand}/deactivate', [App\Http\Controllers\BrandsController::class, 'deactivate']);
+
+    Route::post('/brandLogos', [App\Http\Controllers\BrandLogosController::class, 'store']);
 });

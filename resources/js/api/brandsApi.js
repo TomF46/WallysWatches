@@ -65,3 +65,16 @@ export function getBrandProductsPage(url) {
             throw error;
         });
 }
+
+export function storeBrandLogo(image) {
+    const data = new FormData();
+    data.append('file', image);
+    return axiosClient
+        .post("/api/brandLogos", data)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            throw error;
+        });
+}

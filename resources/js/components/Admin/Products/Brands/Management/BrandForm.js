@@ -7,6 +7,7 @@ const BrandForm = ({
     brand,
     onSave,
     onChange,
+    onImageUpload,
     saving = false,
     errors = {}
 }) => {
@@ -40,6 +41,28 @@ const BrandForm = ({
                                 required="true"
                             />
                         </div>
+
+                        <div className="mb-6">
+                            {brand.logo_url != null ? (
+                                <div>
+                                    <h3 className="font-bold text-xl text-center items-center py-4">Logo</h3>
+                                    <img src={brand.logo_url} alt="brand-logo" className="md:max-w-md m-auto" />
+                                    {/* <p className="text-red-400 font-bold pointer inline hover:text-red-500" onClick={() => onRemoveImage(questionIndex)}>Remove image</p> */}
+                                </div>
+                            ) : (
+                                <label className="bg-primary text-secondary rounded py-2 px-4 hover:opacity-75 inline-flex items-center">
+                                    Add Logo
+                                    <input
+                                        type="file"
+                                        name="logo_url"
+                                        className="border-gray-400 p-2 w-full hidden"
+                                        onChange={(e) => onImageUpload(e)}
+
+                                    />
+                                </label>
+                            )}
+                        </div>
+
                         <div className="flex justify-center">
                             <button
                                 type="submit"
@@ -64,6 +87,7 @@ BrandForm.propTypes = {
     errors: PropTypes.object,
     onSave: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    onImageUpload: PropTypes.func.isRequired,
     saving: PropTypes.bool
 };
 
