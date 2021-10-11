@@ -1,6 +1,6 @@
 import axiosClient from "../tools/axiosClient";
 
-export function AddBrand(brand) {
+export function addBrand(brand) {
     return axiosClient
         .post("/api/brands", brand)
         .then(response => {
@@ -8,6 +8,17 @@ export function AddBrand(brand) {
         })
         .catch(error => {
             throw error.response;
+        });
+}
+
+export function editBrand(brand) {
+    return axiosClient
+        .put(`/api/brands/${brand.id}`, brand)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            throw error;
         });
 }
 

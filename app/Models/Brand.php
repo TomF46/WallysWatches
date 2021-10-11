@@ -28,7 +28,7 @@ class Brand extends Model
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'logoUrl' => $this->logo_url,
+            'logo_url' => $this->logo_url,
         ];
     }
 
