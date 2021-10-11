@@ -33,7 +33,7 @@ class Product extends Model
     protected function getImages()
     {
         return $this->productImages->map(function ($productImage) {
-            return $productImage->map();
+            return $productImage->image_url;
         });
     }
 

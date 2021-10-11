@@ -7,8 +7,6 @@ import LoadingMessage from "../../../../DisplayComponents/LoadingMessage";
 import { getBrandById, getBrandProducts, getBrandProductsPage } from "../../../../../api/brandsApi";
 import ProductsGridWithPagination from "../../../../DisplayComponents/ProductsGridWithPagination";
 
-
-
 const BrandPage = ({ brandId }) => {
     const [brand, setBrand] = useState(null);
     const [productsPaginator, setProductsPaginator] = useState(null);
@@ -81,7 +79,7 @@ const BrandPage = ({ brandId }) => {
                             ) : (
                                 <div>
                                     {productsPaginator.total > 0 ? (
-                                        <ProductsGridWithPagination paginationData={productsPaginator} onPageChange={getBrandProductsByPage} />
+                                        <ProductsGridWithPagination paginationData={productsPaginator} onPageChange={getBrandProductsByPage} asAdmin={true} />
                                     ) : (
                                         <p className="text-center">{brand.name} doesn't currently have any available products</p>
                                     )}

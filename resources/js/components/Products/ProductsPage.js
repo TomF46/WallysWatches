@@ -67,7 +67,7 @@ const ProductsPage = () => {
                         <ProductSearchForm filters={filters} onFilterChange={handleFilterChange} />
                         <div>
                             {productsPaginator.total > 0 ? (
-                                <ProductsGridWithPagination paginationData={productsPaginator} onPageChange={getProductPage} />
+                                <ProductsGridWithPagination paginationData={productsPaginator} onPageChange={getProductPage} asAdmin={false} />
                             ) : (
                                 <p className="text-center">No products match your search</p>
                             )}

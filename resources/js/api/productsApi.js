@@ -1,5 +1,27 @@
 import axiosClient from "../tools/axiosClient";
 
+export function addProduct(product) {
+    return axiosClient
+        .post("/api/products", product)
+        .then(response => {
+            return response;
+        })
+        .catch(error => {
+            throw error.response;
+        });
+}
+
+export function editProduct(product) {
+    return axiosClient
+        .put(`/api/products/${product.id}`, product)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            throw error;
+        });
+}
+
 export function getProductById(id) {
     return axiosClient
         .get(`/api/products/${id}`)
@@ -41,5 +63,18 @@ export function getShowcase() {
         })
         .catch(error => {
             throw error.response;
+        });
+}
+
+export function storeProductImage(image) {
+    const data = new FormData();
+    data.append('file', image);
+    return axiosClient
+        .post("/api/productImages", data)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            throw error;
         });
 }

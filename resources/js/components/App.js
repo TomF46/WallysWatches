@@ -7,6 +7,7 @@ import AdminHomePage from "./Admin/AdminHomepage";
 import BrandPage from "./Admin/Products/Brands/Brand/BrandPage";
 import BrandsManagementPage from "./Admin/Products/Brands/BrandsManagementPage";
 import ManageBrandPage from "./Admin/Products/Brands/Management/ManageBrandPage";
+import ManageProductPage from "./Admin/Products/Management/ManageProductPage";
 import UsersManagementPage from "./Admin/Users/UserManagementPage";
 import LoginPage from "./Auth/Login/LoginPage";
 import RegisterPage from "./Auth/Register/RegisterPage";
@@ -24,6 +25,17 @@ const Main = ({ location }) => (
                 <Route path="/" exact component={HomePage} />
                 <Route path="/auth/login" component={LoginPage} />
                 <Route path="/auth/register" component={RegisterPage} />
+                <AdminRoute
+                    path="/admin/brands/:brandId/add"
+                    exact
+                    component={ManageProductPage
+                    }
+                />
+                <AdminRoute
+                    path="/admin/brands/:brandId/:productId/edit"
+                    component={ManageProductPage
+                    }
+                />
                 <AdminRoute
                     path="/admin/brands/add"
                     exact

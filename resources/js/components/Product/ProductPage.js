@@ -67,14 +67,14 @@ const ProductPage = ({ productId, addItemToBag, bag }) => {
                         </div>
                         <div className="col-span-12 md:col-span-6 pl-4">
                             {displayedImage && (
-                                <img className="product-image" src={displayedImage.url} />
+                                <img className="product-image" src={displayedImage} />
                             )}
                             {product.images.length > 1 && (
                                 <div className="image-reel grid grid-cols-12 gap-4 mt-16 px-8">
                                     {product.images.map((image, index) => {
                                         return (
                                             index > 0 && (
-                                                <div className="h-32 bg-cover hover:opacity-75 col-span-2" style={{ backgroundImage: `url(${image.url})` }} onMouseEnter={() => setDisplayedImage(image)}
+                                                <div className="h-32 bg-cover hover:opacity-75 col-span-2" style={{ backgroundImage: `url(${image})` }} onMouseEnter={() => setDisplayedImage(image)}
                                                     onMouseLeave={() => setDisplayedImage(product.images[0])}></div>
                                             )
                                         )
