@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import ProductForm from "./ProductForm";
 import { addProduct, editProduct, getProductById, storeProductImage } from "../../../../api/productsApi";
 import LoadingMessage from "../../../DisplayComponents/LoadingMessage";
+import { confirmAlert } from "react-confirm-alert";
+
 
 const ManageProductPage = ({ brandId, productId, history }) => {
     const [product, setProduct] = useState({
@@ -19,6 +21,7 @@ const ManageProductPage = ({ brandId, productId, history }) => {
     const [errors, setErrors] = useState({});
     const [saving, setSaving] = useState(false);
     const [loaded, setLoaded] = useState(false);
+    const [selectedImageOrdinal, setSelectedImageOrdinal] = useState(null);
 
     useEffect(() => {
         if (productId) {
@@ -122,6 +125,45 @@ const ManageProductPage = ({ brandId, productId, history }) => {
         });
     }
 
+    function handleImageSelected(ordinal) {
+        setSelectedImageOrdinal(ordinal);
+    }
+
+    function handleModalClosed() {
+        setSelectedImageOrdinal(null);
+    }
+
+    function handleImageMadePrimary() {
+        let clone = { ...product };
+        let image = clone.images[selectedImageOrdinal];
+        clone.images.splice(selectedImageOrdinal, 1);
+        clone.images.splice(0, 0, image);
+        setProduct(clone);
+        setSelectedImageOrdinal(null);
+    }
+
+    function handleImageRemoved() {
+        confirmAlert({
+            title: "Confirm removal",
+            message: `Are you sure you want to remove this image?`,
+            buttons: [
+                {
+                    label: "Yes",
+                    onClick: () => {
+                        let clone = { ...product };
+                        clone.images.splice(selectedImageOrdinal, 1);
+                        setProduct(clone);
+                        setSelectedImageOrdinal(null);
+                    },
+                },
+                {
+                    label: "No",
+                    onClick: () => { },
+                },
+            ],
+        });
+    }
+
     return (
         <div className="add-product-page">
             <div className="bg-secondary mb-8">
@@ -139,8 +181,13 @@ const ManageProductPage = ({ brandId, productId, history }) => {
                         errors={errors}
                         onChange={handleChange}
                         onImageUpload={handleImageUpload}
+                        onImageSelected={handleImageSelected}
                         onSave={handleSave}
                         saving={saving}
+                        selectedImageOrdinal={selectedImageOrdinal}
+                        onModalClosed={handleModalClosed}
+                        onImageMadePrimary={handleImageMadePrimary}
+                        onImageRemoved={handleImageRemoved}
                     />
                 )}
 
