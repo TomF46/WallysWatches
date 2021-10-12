@@ -14,7 +14,7 @@ const BagItemRow = ({ product }) => {
             <div className="grid grid-cols-12">
                 <div className="col-span-2 h-32 bg-cover  hover:bg-gray" style={{ backgroundImage: `url(${product.images[0]})` }}></div>
                 <div className="cold-span-10 p-4">
-                    <div className="font-bold text-xl">{product.name}</div>
+                    <div className="font-bold text-xl">{product.fullName}</div>
                     <div className="font-bold text-gray"><MoneyFormat value={product.price} /></div>
                 </div>
             </div>

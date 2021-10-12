@@ -64,13 +64,21 @@ const BrandPage = ({ brandId }) => {
                                 {brand.logo_url && (
                                     <div>
                                         <img src={brand.logo_url} alt="brand-logo" className="md:max-w-md m-auto" />
-                                        {/* <p className="text-red-400 font-bold pointer inline hover:text-red-500" onClick={() => onRemoveImage(questionIndex)}>Remove image</p> */}
                                     </div>
                                 )}
                             </div>
                             <div className="col-span-12 text-center">
                                 <h1 className="font-bold text-4xl">{brand.name}</h1>
                                 <p className="mt-8">{brand.description}</p>
+                                <Link
+                                    to={`/admin/brands/${brand.id}/add`}
+                                    className="bg-secondary text-primary hover:opacity-75 text-center  text-lg md:px-4 md:py-2 md:leading-none rounded inline-flex items-center mx-auto my-4 "
+                                >
+                                    <svg className="text-grey-800 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    <span className="ml-1">Add {brand.name} Product</span>
+                                </Link>
                             </div>
                         </div>
                         <div className="mx-auto mt-16">

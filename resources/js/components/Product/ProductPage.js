@@ -43,7 +43,7 @@ const ProductPage = ({ productId, addItemToBag, bag }) => {
     return (
         <>
             <div className="bg-secondary mb-8">
-                <h1 className="font-bold text-3xl text-center items-center py-4">{product && (`${product.name}`)}</h1>
+                <h1 className="font-bold text-3xl text-center items-center py-4">{product && (`${product.fullName}`)}</h1>
             </div>
             <div className="produt-page container mx-auto p-4 lg:p-0">
                 {!product ? (
@@ -51,7 +51,7 @@ const ProductPage = ({ productId, addItemToBag, bag }) => {
                 ) : (
                     <div className="grid grid-cols-12 mt-16">
                         <div className="col-span-12 md:col-span-6">
-                            <h3 className="font-bold text-2xl">{product.name}</h3>
+                            <h3 className="font-bold text-2xl">{product.fullName}</h3>
                             <p className="font-bold text-gray"><MoneyFormat value={product.price} /></p>
                             <p>{product.stock} Remaining</p>
                             <p className="mt-8">{product.description}</p>

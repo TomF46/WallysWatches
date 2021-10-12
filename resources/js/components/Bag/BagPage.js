@@ -35,7 +35,7 @@ const BagPage = ({ bag }) => {
                                     <p className="font-bold text-center my-2">Summary</p>
                                     {bag.map((product) => {
                                         return (
-                                            <p>{product.name}: <MoneyFormat value={product.price} /> </p>
+                                            <p>{product.fullName}: <MoneyFormat value={product.price} /> </p>
                                         )
                                     })}
                                     <p className="font-bold">Total: <MoneyFormat value={getTotalPrice()} /></p>

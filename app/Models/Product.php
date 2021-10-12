@@ -46,9 +46,9 @@ class Product extends Model
     {
         return [
             'id' => $this->id,
-            'name' => "{$this->brand->name} {$this->name}",
-            'model' => $this->name,
+            'name' => $this->name,
             'brand' => $this->getBrand(),
+            'fullName' => "{$this->brand->name} {$this->name}",
             'productCode' => $this->productCode,
             'description' => $this->description,
             'price' => $this->price,

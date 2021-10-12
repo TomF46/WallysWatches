@@ -85,7 +85,7 @@ const ManageProductPage = ({ brandId, productId, history }) => {
     function add() {
         addProduct(product).then(response => {
             toast.success("Successfully Added!");
-            history.push(`/admin/products/${response.data.id}`);
+            history.push(`/admin/brands/${brandId}`);
         }).catch(err => {
             setSaving(false);
             toast.error(formatErrorText(err), {
@@ -95,9 +95,12 @@ const ManageProductPage = ({ brandId, productId, history }) => {
     }
 
     function edit() {
-        editProduct(product).then(response => {
+        let payload = { ...product };
+        payload.brand_id = product.brand.id;
+        delete payload.brand;
+        editProduct(payload).then(response => {
             toast.success("Successfully Edited!");
-            history.push(`/admin/products/${response.id}`);
+            history.push(`/admin/brands/${brandId}`);
         }).catch(err => {
             setSaving(false);
             toast.error(formatErrorText(err), {
