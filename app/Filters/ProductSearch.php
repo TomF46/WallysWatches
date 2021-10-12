@@ -14,7 +14,10 @@ class ProductSearch
         $products->where('active', true);
 
         if ($filters->has('name')) {
-            $products->where('name', 'like', "{$filters->input('name')}%");
+            $products->where('name', 'like', "{$filters->input('name')}%")
+            ->orWhereHas('brand', function($query) use ($filters) { 
+                $query->where('name', 'like', "{$filters->input('name')}%");
+            });
         }
 
         if ($filters->has('productCode')) {
