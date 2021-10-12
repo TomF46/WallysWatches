@@ -22,6 +22,7 @@ const ManageProductPage = ({ brandId, productId, history }) => {
     const [saving, setSaving] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [selectedImageOrdinal, setSelectedImageOrdinal] = useState(null);
+    const [uploadingImage, setUploadingImage] = useState(false);
 
     useEffect(() => {
         if (productId) {
@@ -71,6 +72,14 @@ const ManageProductPage = ({ brandId, productId, history }) => {
     function handleSave(event) {
         event.preventDefault();
         if (!formIsValid()) return;
+
+        if (product.images.length == 0) {
+            toast.error("At least one image must be added for the product", {
+                autoClose: false,
+            })
+            return;
+        }
+
         setSaving(true);
         productId ? edit() : add();
     }
@@ -101,6 +110,7 @@ const ManageProductPage = ({ brandId, productId, history }) => {
         let payload = { ...product };
         payload.brand_id = product.brand.id;
         delete payload.brand;
+
         editProduct(payload).then(response => {
             toast.success("Successfully Edited!");
             history.push(`/admin/brands/${brandId}`);
@@ -114,14 +124,17 @@ const ManageProductPage = ({ brandId, productId, history }) => {
 
     function handleImageUpload(event) {
         let file = event.target.files[0];
+        setUploadingImage(true);
         storeProductImage(file).then(res => {
             toast.success("Sucessfully uploaded image");
             let productClone = { ...product };
             productClone.images.push(res.path);
             setProduct(productClone);
+            setUploadingImage(false);
         }).catch(error => {
             setIsUpploadingImage(false);
             toast.error("Unable to uploaded image");
+            setUploadingImage(false);
         });
     }
 
@@ -184,6 +197,7 @@ const ManageProductPage = ({ brandId, productId, history }) => {
                         onImageSelected={handleImageSelected}
                         onSave={handleSave}
                         saving={saving}
+                        uploadingImage={uploadingImage}
                         selectedImageOrdinal={selectedImageOrdinal}
                         onModalClosed={handleModalClosed}
                         onImageMadePrimary={handleImageMadePrimary}

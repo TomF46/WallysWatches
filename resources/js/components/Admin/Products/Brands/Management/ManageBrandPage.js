@@ -62,6 +62,12 @@ const ManageBrandPage = ({ brandId, history }) => {
     function handleSave(event) {
         event.preventDefault();
         if (!formIsValid()) return;
+        if (!brand.logo_url) {
+            toast.error("A logo must be added for this brand", {
+                autoClose: false,
+            })
+            return;
+        }
         setSaving(true);
         brandId ? edit() : add();
     }

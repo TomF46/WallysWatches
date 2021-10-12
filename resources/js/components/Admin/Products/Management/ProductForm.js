@@ -5,6 +5,7 @@ import NumberInput from "../../../FormComponents/NumberInput";
 import TextInput from "../../../FormComponents/TextInput";
 import TextAreaInput from "../../../FormComponents/TextAreaInput";
 import ImageManagementModal from "../../../DisplayComponents/ImageManagementModal";
+import LoadingMessage from "../../../DisplayComponents/LoadingMessage";
 
 const ProductForm = ({
     product,
@@ -13,6 +14,7 @@ const ProductForm = ({
     onImageUpload,
     saving = false,
     errors = {},
+    uploadingImage,
     selectedImageOrdinal,
     onImageSelected,
     onModalClosed,
@@ -84,7 +86,12 @@ const ProductForm = ({
                         </div>
                     </div>
                     <div className="card shadow-md rounded-md p-8 mt-4">
-                        <h2 className="font-bold text-2xl text-center items-center py-4">Product Images</h2>
+                        <h2 className="font-bold text-2xl text-center items-center pb-4">Product Images</h2>
+                        <p className="text-center py-4">{product.images.length > 0 ? (
+                            "Click an image for options such as the ability to remove an image or make it the primary image."
+                        ) : (
+                            "At least one image must be added for this product before submitting."
+                        )}</p>
                         {product.images && (
                             product.images.map((image, ordinal) => {
                                 return (
@@ -97,6 +104,9 @@ const ProductForm = ({
                                     </div>
                                 )
                             })
+                        )}
+                        {uploadingImage && (
+                            <LoadingMessage message={'Uploading image'} />
                         )}
                         <div className="flex items-center">
                             <label className="bg-primary text-secondary rounded py-2 px-4 hover:opacity-75 inline-flex items-center m-auto">
@@ -143,6 +153,7 @@ ProductForm.propTypes = {
     onImageUpload: PropTypes.func.isRequired,
     onImageSelected: PropTypes.func.isRequired,
     saving: PropTypes.bool,
+    uploadingImage: PropTypes.bool,
     selectedImageOrdinal: PropTypes.any,
     onModalClosed: PropTypes.func.isRequired,
     onImageRemoved: PropTypes.func.isRequired,
