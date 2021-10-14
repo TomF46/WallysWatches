@@ -38,7 +38,6 @@ class OrdersTest extends TestCase
         ])->postJson(
             '/api/orders',
             [
-                'user_id' => $customer->id,
                 'orderProducts' => [
                     ['id' => $product->id, 'quantity' => 1]
                 ]
@@ -100,7 +99,6 @@ class OrdersTest extends TestCase
         ])->postJson(
             '/api/orders',
             [
-                'user_id' => $customer->id,
                 'orderProducts' => [
                 ]
             ]

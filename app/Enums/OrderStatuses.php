@@ -9,4 +9,5 @@ final class OrderStatuses extends Enum
     const Processing  = 0;
     const Dispatched = 1;
     const Complete = 2;
+    const Cancelled = 3;
 }

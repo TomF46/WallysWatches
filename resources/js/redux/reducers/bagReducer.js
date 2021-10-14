@@ -10,6 +10,8 @@ export default function BagReducer(
             return [...state, { ...action.item }];
         case types.REMOVE_ITEM_FROM_BAG:
             return state.filter((item) => item.id != action.item.id);
+        case types.REMOVE_ALL_ITEMS_FROM_BAG:
+            return [];
         default:
             return state;
     }

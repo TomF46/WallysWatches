@@ -3,11 +3,30 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import BagItemRow from "./BagItemRow";
 import MoneyFormat from "../DisplayComponents/MoneyFormat";
+import CheckoutModal from "../DisplayComponents/CheckoutModal";
+import { addOrder } from "../../api/ordersApi";
+import { toast } from "react-toastify";
+import { removeAllItemsFromBag } from "../../redux/actions/bagActions";
 
-const BagPage = ({ bag }) => {
+const BagPage = ({ bag, removeAllItemsFromBag, history }) => {
+    const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
 
     function getTotalPrice() {
         return bag.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next));
+    }
+
+    function handleCheckout() {
+        let products = bag.map(item => { return { id: item.id, quantity: 1 } });
+        let order = { orderProducts: products }
+        addOrder(order).then(res => {
+            removeAllItemsFromBag();
+            // TODO Go to order info page
+            history.push("/");
+        }).catch(error => {
+            toast.error("Error during checkout" + error.message, {
+                autoClose: false,
+            });
+        });
     }
 
     return (
@@ -25,7 +44,7 @@ const BagPage = ({ bag }) => {
                                 <div className="grid grid-cols-12">
                                     {bag.map((product) => {
                                         return (
-                                            <BagItemRow product={product} />
+                                            <BagItemRow key={product.id} product={product} />
                                         )
                                     })}
                                 </div>
@@ -40,6 +59,7 @@ const BagPage = ({ bag }) => {
                                     })}
                                     <p className="font-bold">Total: <MoneyFormat value={getTotalPrice()} /></p>
                                     <button
+                                        onClick={() => { setCheckoutModalOpen(true) }}
                                         className="bg-primary text-secondary hover:opacity-75  text-lg md:px-4 md:py-2 md:leading-none rounded inline-flex items-center my-2"
                                     >
                                         <svg className="text-grey-800 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,13 +73,17 @@ const BagPage = ({ bag }) => {
                     </>
                 )}
             </div>
+            {checkoutModalOpen && (
+                <CheckoutModal onCheckout={handleCheckout} onCancel={() => { setCheckoutModalOpen(false) }} />
+            )}
         </>
 
     );
 };
 
 BagPage.propTypes = {
-    bag: PropTypes.array.isRequired
+    bag: PropTypes.array.isRequired,
+    removeAllItemsFromBag: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -69,7 +93,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-    //
+    removeAllItemsFromBag
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BagPage);
