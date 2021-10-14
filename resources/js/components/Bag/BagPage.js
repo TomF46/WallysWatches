@@ -7,9 +7,14 @@ import CheckoutModal from "../DisplayComponents/CheckoutModal";
 import { addOrder } from "../../api/ordersApi";
 import { toast } from "react-toastify";
 import { removeAllItemsFromBag } from "../../redux/actions/bagActions";
+import { saveBag } from "../../tools/localStorage";
 
 const BagPage = ({ bag, removeAllItemsFromBag, history }) => {
     const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
+
+    useEffect(() => {
+        saveBag(bag);
+    }, [bag])
 
     function getTotalPrice() {
         return bag.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next));
@@ -54,7 +59,7 @@ const BagPage = ({ bag, removeAllItemsFromBag, history }) => {
                                     <p className="font-bold text-center my-2">Summary</p>
                                     {bag.map((product) => {
                                         return (
-                                            <p>{product.fullName}: <MoneyFormat value={product.price} /> </p>
+                                            <p key={product.id}>{product.fullName}: <MoneyFormat value={product.price} /> </p>
                                         )
                                     })}
                                     <p className="font-bold">Total: <MoneyFormat value={getTotalPrice()} /></p>
