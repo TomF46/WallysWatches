@@ -43,6 +43,7 @@ Route::get('/brands/{brand}/products', [App\Http\Controllers\BrandsController::c
 
 Route::middleware(['auth:api'])->group(function () {  
     Route::get('/me/isAdmin', [App\Http\Controllers\MeController::class, 'isAdmin']);
+    Route::get('/me/orders', [App\Http\Controllers\MeController::class, 'orders']);
 
     Route::get('/orders', [App\Http\Controllers\OrdersController::class, 'index']);
     Route::post('/orders', [App\Http\Controllers\OrdersController::class, 'store']);

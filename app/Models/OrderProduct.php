@@ -26,7 +26,8 @@ class OrderProduct extends Model
 
     public function product()
     {
-        return $this->hasOne(Product::class);
+        return $this->hasOne(Product::class, 'id');
+
     }
 
     public function map()
@@ -34,7 +35,9 @@ class OrderProduct extends Model
         return [
             'id' => $this->id,
             'order' => $this->order,
-            'product' => $this->product
+            'product' => $this->product->map(),
+            'quantity' => $this->quantity,
+            'cost' => $this->cost
         ];
     }
 }

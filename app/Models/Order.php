@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Enums\OrderStatuses;
 
 class Order extends Model
 {
@@ -27,14 +28,39 @@ class Order extends Model
         return $this->hasMany(OrderProduct::class);
     }
 
+    public function getMappedProducts(){
+        return $this->orderProducts()->get()->transform(function ($order){
+            return $order->map();
+        });
+    }
+
     public function map()
     {
         return [
             'id' => $this->id,
             'user' => $this->user,
             'status' => $this->status,
-            'products' => $this->orderProducts
+            'statusText' => $this->getStatusText(),
+            'products' => $this->getMappedProducts()
         ];
+    }
+
+    public function getStatusText()
+    {
+        switch ($this->status) {
+            case OrderStatuses::Processing:
+                return "Processing";
+                break;
+            case ApplicationStatus::Dispatched:
+                return "Dispatched";
+                break;
+            case ApplicationStatus::Complete:
+                return "Complete";
+                break;
+            case ApplicationStatus::Cancelled:
+                return "Cancelled";
+                break;
+        }
     }
 
     public function attatchProducts($products){

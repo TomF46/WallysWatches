@@ -43,3 +43,25 @@ export function searchOrdersWithPagination(url, filters) {
             throw error;
         });
 }
+
+export function getCurrentUsersOrders() {
+    return axiosClient
+        .get("/api/me/orders")
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            throw error;
+        });
+}
+
+export function getCurrentUsersOrdersWithPagination(url) {
+    return axiosClient
+        .post(url)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            throw error;
+        });
+}

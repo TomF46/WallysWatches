@@ -14,6 +14,8 @@ import RegisterPage from "./Auth/Register/RegisterPage";
 import BagPage from "./Bag/BagPage";
 import Header from "./DisplayComponents/Header";
 import HomePage from "./Home/HomePage";
+import OrderPage from "./Order/OrderPage";
+import OrdersPage from "./Orders/OrdersPage";
 import ProductPage from "./Product/ProductPage";
 import ProductsPage from "./Products/ProductsPage";
 
@@ -67,6 +69,8 @@ const Main = ({ location }) => (
                     component={AdminHomePage
                     }
                 />
+                <Route path="/orders/:orderId" component={OrderPage} />
+                <Route path="/orders" component={OrdersPage} />
                 <Route path="/products/:productId" component={ProductPage} />
                 <Route path="/products" component={ProductsPage} />
                 <Route path="/bag" component={BagPage} />
