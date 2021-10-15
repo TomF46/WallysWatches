@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-use App\Models\OrderProduct;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Enums\OrderStatuses;
 
@@ -23,15 +23,19 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function orderProducts()
+    public function orderItems()
     {
-        return $this->hasMany(OrderProduct::class);
+        return $this->hasMany(OrderItem::class);
     }
 
-    public function getMappedProducts(){
-        return $this->orderProducts()->get()->transform(function ($order){
+    public function getMappedItems(){
+        return $this->orderItems()->get()->transform(function ($order){
             return $order->map();
         });
+    }
+
+    public function getTotalCost(){
+        return $this->orderItems()->sum('cost');
     }
 
     public function map()
@@ -41,7 +45,8 @@ class Order extends Model
             'user' => $this->user,
             'status' => $this->status,
             'statusText' => $this->getStatusText(),
-            'products' => $this->getMappedProducts()
+            'items' => $this->getMappedItems(),
+            'totalCost' => $this->getTotalCost()
         ];
     }
 
@@ -64,14 +69,14 @@ class Order extends Model
     }
 
     public function attatchProducts($products){
-        foreach($products as $orderProduct){
-            $product = Product::find($orderProduct['id']);
+        foreach($products as $orderItem){
+            $product = Product::find($orderItem['id']);
 
-            OrderProduct::create([
+            OrderItem::create([
                 'order_id' => $this->id,
                 'product_id' => $product->id,
-                'quantity' => $orderProduct['quantity'],
-                'cost' => $orderProduct['quantity'] * $product->price
+                'quantity' => $orderItem['quantity'],
+                'cost' => $orderItem['quantity'] * $product->price
 
             ]);
         }

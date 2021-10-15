@@ -15,13 +15,14 @@ const OrderListItem = ({ order }) => {
                 <div className="col-span-12 p-4">
                     <h3 className="font-bold text-xl">Order: {order.id}</h3>
                     <p>Status: {order.statusText}</p>
-                    {order.products && (
-                        order.products.map((product) => {
+                    {order.items && (
+                        order.items.map((item) => {
                             return (
-                                <p key={product.id}>Product: {product.product.name} Quantity: {product.quantity} Total:<span><MoneyFormat value={product.cost} /></span></p>
+                                <p key={item.id}>Product: {item.product.name} Quantity: {item.quantity} Total: <span><MoneyFormat value={item.cost} /></span></p>
                             )
                         })
                     )}
+                    <p className="font-bold">Total: <MoneyFormat value={order.totalCost} /></p>
                 </div>
             </div>
         </div>

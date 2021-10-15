@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Order;
 use App\Models\Product;
 
-class OrderProduct extends Model
+class OrderItem extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table = 'orders_products';
+    protected $table = 'order_items';
     protected $fillable = [
         'order_id',
         'product_id',

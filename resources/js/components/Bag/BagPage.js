@@ -22,7 +22,7 @@ const BagPage = ({ bag, removeAllItemsFromBag, history }) => {
 
     function handleCheckout() {
         let products = bag.map(item => { return { id: item.id, quantity: 1 } });
-        let order = { orderProducts: products }
+        let order = { orderItems: products }
         addOrder(order).then(res => {
             removeAllItemsFromBag();
             // TODO Go to order info page

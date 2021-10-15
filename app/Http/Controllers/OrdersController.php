@@ -44,7 +44,7 @@ class OrdersController extends Controller
             'user_id' => $user->id
         ]);
 
-        $order->attatchProducts($attributes['orderProducts']);
+        $order->attatchProducts($attributes['orderItems']);
         $order = $order->fresh();
 
         return response()->json($order, 201);
@@ -53,7 +53,7 @@ class OrdersController extends Controller
     protected function validateOrder(Request $request)
     {
         return $request->validate([
-            'orderProducts' => 'required|array'
+            'orderItems' => 'required|array'
         ]);
     }
 }

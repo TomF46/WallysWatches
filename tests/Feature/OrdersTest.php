@@ -10,7 +10,7 @@ use App\Enums\Roles;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
-use App\Models\OrderProduct;
+use App\Models\OrderItem;
 use Tests\Helpers\TestHelper;
 
 class OrdersTest extends TestCase
@@ -38,7 +38,7 @@ class OrdersTest extends TestCase
         ])->postJson(
             '/api/orders',
             [
-                'orderProducts' => [
+                'orderItems' => [
                     ['id' => $product->id, 'quantity' => 1]
                 ]
             ]
@@ -50,8 +50,8 @@ class OrdersTest extends TestCase
     public function testCanGetOrders()
     {
 
-        $order1 = Order::factory()->has(OrderProduct::factory()->count(2))->create();
-        $order2 = Order::factory()->has(OrderProduct::factory()->count(3))->create();
+        $order1 = Order::factory()->has(OrderItem::factory()->count(2))->create();
+        $order2 = Order::factory()->has(OrderItem::factory()->count(3))->create();
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
@@ -79,14 +79,14 @@ class OrdersTest extends TestCase
     public function testCanGetOrder()
     {
 
-        $order = Order::factory()->has(OrderProduct::factory()->count(2))->create();
+        $order = Order::factory()->has(OrderItem::factory()->count(2))->create();
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . TestHelper::getBearerTokenForUser($this->user)
         ])->get('/api/orders/' . $order->id);
         $response->assertOk();
-        $response->assertJsonCount(2, "products");
+        $response->assertJsonCount(2, "items");
     }
 
     public function testCantAddInvalidProduct()
@@ -99,7 +99,7 @@ class OrdersTest extends TestCase
         ])->postJson(
             '/api/orders',
             [
-                'orderProducts' => [
+                'orderItems' => [
                 ]
             ]
         );

@@ -2,19 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\OrderProduct;
+use App\Models\OrderItem;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class OrderProductFactory extends Factory
+class OrderItemFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = OrderProduct::class;
+    protected $model = OrderItem::class;
 
     /**
      * Define the model's default state.

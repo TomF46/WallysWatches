@@ -9,7 +9,7 @@ use Tests\TestCase;
 use App\Enums\Roles;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\OrderProduct;
+use App\Models\OrderItem;
 use Tests\Helpers\TestHelper;
 
 class MeTest extends TestCase
@@ -29,10 +29,10 @@ class MeTest extends TestCase
     public function testCanGetCurrentUsersOrders()
     {
 
-        $order1 = Order::factory()->has(OrderProduct::factory()->count(2))->create([
+        $order1 = Order::factory()->has(OrderItem::factory()->count(2))->create([
             'user_id' => $this->user->id
         ]);
-        $order2 = Order::factory()->has(OrderProduct::factory()->count(3))->create([
+        $order2 = Order::factory()->has(OrderItem::factory()->count(3))->create([
             'user_id' => $this->user->id
         ]);
 
